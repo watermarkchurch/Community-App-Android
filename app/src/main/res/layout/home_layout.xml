@@ -1,34 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="5">
+    android:layout_height="match_parent">
     <LinearLayout
-        android:background="@color/colorPrimary"
-        android:layout_height="0dp"
+        android:id="@+id/home"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_weight="3">
-        <TextView
+        android:layout_height="wrap_content">
+
+        <!-- The "Weekly Media" Section. -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="50dp"
-            android:text="The Table"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:layout_marginBottom="20px">
+            <LinearLayout
+                android:id="@+id/weekly"
+                android:orientation="vertical"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weekly Media"
+                    android:textSize="30dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:paddingLeft="13px"
+                    android:paddingTop="5px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weekly Sermon Application"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="13px"
+                    android:paddingTop="5px"/>
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/weekly_scroll"
+                    android:orientation="horizontal"
+                    android:background="@color/colorPrimary"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content">
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <!-- The "Community Questions" Section. -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Community Questions"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:paddingLeft="13px"
+                    android:paddingTop="5px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Applying the Core Values"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:paddingLeft="13px"
+                    android:paddingRight="5px"
+                    android:paddingBottom="10px"
+                    android:paddingTop="2px"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/questions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:background="@color/white"
-        android:layout_height="0dp"
-        android:layout_width="match_parent"
-        android:layout_weight="2">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="50dp"
-            android:text="Community Questions"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>

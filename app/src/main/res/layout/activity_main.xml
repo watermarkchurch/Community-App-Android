@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
-    tools:context="com.watermark.community_app.communityapp.MainActivity">
+    tools:context=".activity.MainActivity">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav"

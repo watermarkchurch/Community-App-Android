@@ -10,6 +10,8 @@ import com.watermark.community_app.communityapp.R;
 
 /**
  * Created by Blake on 2/16/2019.
+ *
+ * The "Search" page.
  */
 public class SearchFragment extends Fragment {
     @Override
