@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<!-- The "Pantry" Section. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pantry"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="50dp"
-        android:text="The Pantry"
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
-</LinearLayout>
+        android:orientation="vertical">
+
+        <!-- The "Pantry" Section. -->
+        <LinearLayout
+            android:id="@+id/weekly"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingBottom="10px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Index"
+                android:textSize="30dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:paddingLeft="13px"
+                android:paddingTop="5px"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Best-of Watermark Resources"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:paddingLeft="13px"
+                android:paddingTop="5px"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="13px"
+            android:divider="#00000000">
+        </ListView>
+    </LinearLayout>
+</ScrollView>

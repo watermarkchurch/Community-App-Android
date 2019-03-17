@@ -2,10 +2,12 @@ package com.watermark.community_app.communityapp.data;
 
 import android.graphics.drawable.BitmapDrawable;
 
+import java.io.Serializable;
+
 /**
  * Created by Blake on 3/2/2019.
  */
-public class PostData {
+public class PostData implements Serializable {
     private String title = "";
     private String mediaUrl = "";
     private String content = "";

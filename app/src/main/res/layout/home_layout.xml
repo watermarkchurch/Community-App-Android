@@ -3,6 +3,7 @@
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/home"
         android:orientation="vertical"
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginBottom="20px">
+
             <LinearLayout
                 android:id="@+id/weekly"
                 android:orientation="vertical"
@@ -41,10 +43,10 @@
                     android:paddingLeft="13px"
                     android:paddingTop="5px"/>
             </LinearLayout>
-
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:id="@+id/weekly_scroll"
                     android:orientation="horizontal"
@@ -88,7 +90,6 @@
                     android:paddingBottom="10px"
                     android:paddingTop="2px"/>
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/questions"
                 android:layout_width="match_parent"

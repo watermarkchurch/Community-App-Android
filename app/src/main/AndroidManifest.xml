@@ -21,5 +21,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.PostActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
     </application>
 </manifest>

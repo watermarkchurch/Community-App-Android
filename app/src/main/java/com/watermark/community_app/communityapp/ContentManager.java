@@ -1,7 +1,5 @@
 package com.watermark.community_app.communityapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 
@@ -13,6 +11,7 @@ import com.contentful.java.cda.CDAResource;
 import com.google.gson.internal.LinkedTreeMap;
 import com.watermark.community_app.communityapp.data.CommunityQuestionsData;
 import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.data.ShelfItem;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class ContentManager {
     public interface ContentLoadedCallback {
         void tableContentLoaded();
         void questionContentLoaded();
+        void pantryContentLoaded();
     }
     private ContentLoadedCallback loadedCallback;
 
@@ -39,10 +39,13 @@ public class ContentManager {
     // Content Type Arrays
     private CDAArray table_cda_array;
     private CDAArray questions_cda_array;
+    private CDAArray pantry_cda_array;
+    private CDAArray shelf_cda_array;
 
     // Processed Arrays
     private ArrayList<PostData> table_list = new ArrayList<>();
     private ArrayList<CommunityQuestionsData> questions_list = new ArrayList<>();
+    private ArrayList<ShelfItem> pantry_list = new ArrayList<>();
 
     // Singleton loading
     private static class InstanceLoader {
@@ -60,18 +63,21 @@ public class ContentManager {
             public void run() {
                 table_cda_array = client.fetch(CDAEntry.class).where("content_type", "table").all();
                 questions_cda_array = client.fetch(CDAEntry.class).where("content_type", "communityQuestions").all();
+                pantry_cda_array = client.fetch(CDAEntry.class).where("content_type", "pantry").all();
+                shelf_cda_array = client.fetch(CDAEntry.class).where("content_type", "shelf").all();
             }
         });
 
-        processTableContent();
         processQuestionContent();
+        processTableContent();
+        processPantryContent();
     }
 
     public void setCallback(ContentLoadedCallback callback) {
         loadedCallback = callback;
     }
 
-    public void processQuestionContent() {
+    private void processTableContent() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground (Void...params){
@@ -83,21 +89,7 @@ public class ContentManager {
                     // Process each post in the entry
                     for (CDAEntry postEntry : posts) {
                         CDAEntry post = table_cda_array.entries().get(postEntry.id());
-
-                        CDAAsset image = postEntry.getField("postImage");
-                        CDAAsset imageAsset = table_cda_array.assets().get(image.id());
-                        LinkedTreeMap map = imageAsset.getField("file");
-                        String imageUrl = (String) map.get("url");
-                        URL url = null;
-                        BitmapDrawable background = null;
-                        try {
-                            url = new URL("http:" + imageUrl);
-                            Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            background = new BitmapDrawable(bitmap);
-                        } catch (Exception ex) {
-                            ex.printStackTrace(System.out);
-                        }
-                        PostData data = new PostData(post.getField("title").toString(), post.getField("mediaUrl").toString(), post.getField("content").toString(), background);
+                        PostData data = processPostData(post, table_cda_array);
                         table_list.add(data);
                     }
                 }
@@ -111,7 +103,7 @@ public class ContentManager {
         }.execute();
     }
 
-    public void processTableContent() {
+    private void processQuestionContent() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground (Void...params){
@@ -138,11 +130,108 @@ public class ContentManager {
         }.execute();
     }
 
+    private void processPantryContent() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground (Void...params){
+                // Process each item in the array
+                for (CDAResource r : pantry_cda_array.items()) {
+                    CDAEntry e = (CDAEntry) r;
+                    ArrayList<CDAEntry> shelves = e.getField("shelves");
+
+                    // Process each top level shelf
+                    for (CDAEntry shelfEntry : shelves) {
+                        ShelfItem data = processShelfItem(shelfEntry);
+                        pantry_list.add(data);
+                    }
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute (Void v){
+                loadedCallback.pantryContentLoaded();
+            }
+        }.execute();
+    }
+
+    private PostData processPostData(CDAEntry post, CDAArray assets) {
+        BitmapDrawable background = null;
+        CDAAsset image = post.getField("postImage");
+        if (image != null && assets.assets() != null) {
+            CDAAsset imageAsset = assets.assets().get(image.id());
+            LinkedTreeMap map = imageAsset.getField("file");
+            String imageUrl = (String) map.get("url");
+            URL url = null;
+            try {
+                //TODO: Setting the background to an image is slow. Commenting out while developing
+                //url = new URL("http:" + imageUrl);
+                //Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                //background = new BitmapDrawable(bitmap);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.out);
+            }
+        }
+
+        return new PostData(checkFieldForNull(post, "title"), checkFieldForNull(post, "mediaUrl"), checkFieldForNull(post, "content"), background);
+    }
+
+    /**
+     * Recursive Algorithm to build the pantry menu.
+     */
+    private ShelfItem processShelfItem(CDAEntry shelfEntry) {
+        CDAEntry shelf = shelf_cda_array.entries().get(shelfEntry.id());
+        ArrayList<CDAEntry> posts = shelf.getField("posts");
+        ArrayList<CDAEntry> shelves = shelf.getField("shelves");
+
+        ArrayList<ShelfItem> nestedShelvesData = new ArrayList<>();
+        ArrayList<PostData> postData = new ArrayList<>();
+
+        if (posts != null) {
+            for (CDAEntry p : posts) {
+                PostData data = processPostData(p, shelf_cda_array);
+                postData.add(data);
+            }
+        }
+
+        if (shelves == null || shelves.isEmpty()) {
+            return new ShelfItem(shelf.getField("name").toString(), postData, nestedShelvesData);
+        }
+
+        for (CDAEntry ns : shelves) {
+            ShelfItem i = processShelfItem(ns);
+            if (i != null) {
+                nestedShelvesData.add(i);
+            }
+        }
+
+        return new ShelfItem(shelf.getField("name").toString(), postData, nestedShelvesData);
+    }
+
+    private String checkFieldForNull(CDAEntry p, String s) {
+        String result = "";
+        if (p.getField(s) != null) {
+            result = p.getField(s).toString();
+        }
+
+        return result;
+    }
+
     public ArrayList<CommunityQuestionsData> getCommunityQuestions() {
         return questions_list;
     }
 
     public ArrayList<PostData> getWeeklyMediaEntries() {
         return table_list;
+    }
+
+    public ArrayList<ShelfItem> getPantryEntries() {
+        for (ShelfItem i : pantry_list) {
+            System.out.println("--------------------------------------");
+            System.out.println(i.toString());
+            System.out.println("--------------------------------------");
+        }
+        return pantry_list;
     }
 }
