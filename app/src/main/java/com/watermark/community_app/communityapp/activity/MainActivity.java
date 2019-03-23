@@ -1,5 +1,6 @@
 package com.watermark.community_app.communityapp.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void launchPostActivity(PostData data, Intent videoIntent, AppCompatActivity parentActivity) {
+    public static void launchPostActivity(PostData data, Intent videoIntent, Activity parentActivity) {
         String titleLabel = parentActivity.getString(R.string.title);
         String descriptionLabel = parentActivity.getString(R.string.content);
         String urlLabel = parentActivity.getString(R.string.media_url);
