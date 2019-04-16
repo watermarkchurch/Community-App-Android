@@ -34,23 +34,26 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     private ContentManager contentManager = ContentManager.getInstance();
     private Intent postIntent;
-
     private HomeWeeklyAdapter weeklyAdapter;
     View root = null;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        postIntent = new Intent(getContext(), PostActivity.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        initWeeklyAdapter(root);
-
+        initAdapters(root);
         return root;
     }
 
-    private void initWeeklyAdapter(View root) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        postIntent = new Intent(getContext(), PostActivity.class);
+        weeklyAdapter = new HomeWeeklyAdapter();
+    }
+
+    private void initAdapters(View root) {
         RecyclerView weeklyScroll = root.findViewById(R.id.weekly_scroll);
         weeklyScroll.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false));
-        weeklyAdapter = new HomeWeeklyAdapter();
         weeklyScroll.setAdapter(weeklyAdapter);
     }
 
@@ -67,6 +70,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void questionContentLoaded() {
+        // TODO: Need to refactor this method to match the tableContentLoaded() so that the content will stay loaded when the fragment is switched.
         ArrayList<CommunityQuestionsData> questions = contentManager.getCommunityQuestions();
 
         // Get the main questions view

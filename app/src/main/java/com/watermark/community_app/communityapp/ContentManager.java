@@ -1,5 +1,7 @@
 package com.watermark.community_app.communityapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 
@@ -165,7 +167,7 @@ public class ContentManager {
             String imageUrl = (String) map.get("url");
             URL url = null;
             try {
-                //TODO: Setting the background to an image is slow. Commenting out while developing
+                // TODO: Setting the background to an image is slow. This is causeing an out of memory exception.
                 //url = new URL("http:" + imageUrl);
                 //Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 //background = new BitmapDrawable(bitmap);
@@ -227,11 +229,6 @@ public class ContentManager {
     }
 
     public ArrayList<ShelfItem> getPantryEntries() {
-        for (ShelfItem i : pantry_list) {
-            System.out.println("--------------------------------------");
-            System.out.println(i.toString());
-            System.out.println("--------------------------------------");
-        }
         return pantry_list;
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/weekly_item_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
     android:layout_margin="@dimen/margin_10dp"
     android:paddingLeft="@dimen/margin_12dp"
     android:paddingRight="@dimen/margin_12dp"
-    android:textColor="@color/black"
+    android:textColor="@color/white"
     android:textSize="@dimen/text_size_24" />

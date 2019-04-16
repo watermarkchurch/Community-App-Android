@@ -1,7 +1,6 @@
 package com.watermark.community_app.communityapp.adapters;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,9 @@ import com.watermark.community_app.communityapp.data.PostData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.WeeklyViewHolder> {
 
@@ -39,6 +41,9 @@ public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.We
         final PostData postData = entries.get(position);
 
         holder.title.setText(entries.get(position).getTitle());
+        // TODO: Setting the background to an image is slow. This is causeing an out of memory exception.
+        //holder.title.setBackground(entries.get(position).getPostImage());
+        holder.title.setBackgroundColor(Color.BLACK);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
