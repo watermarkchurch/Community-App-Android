@@ -83,13 +83,15 @@
                     android:paddingBottom="10px"
                     android:paddingTop="2px"/>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/questions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white">
-            </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/questions_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="32dp"
+                    android:clipToPadding="false"/>
+            <!--</LinearLayout>-->
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

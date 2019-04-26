@@ -4,6 +4,8 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
 
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_24">24sp</dimen>
 
 </resources>
