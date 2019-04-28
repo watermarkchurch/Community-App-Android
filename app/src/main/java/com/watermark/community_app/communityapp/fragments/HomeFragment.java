@@ -1,24 +1,17 @@
 package com.watermark.community_app.communityapp.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.watermark.community_app.communityapp.ContentManager;
 import com.watermark.community_app.communityapp.R;
@@ -33,8 +26,6 @@ import com.watermark.community_app.communityapp.viewmodel.HomeFragmentViewModelF
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
 /**
  * Created by Blake on 2/16/2019.
  * <p>
@@ -45,17 +36,19 @@ public class HomeFragment extends Fragment {
     private Intent postIntent;
     private HomeWeeklyAdapter weeklyAdapter;
     private HomeCommunityQuestionsAdapter homeCommunityQuestionsAdapter;
-    View root = null;
-
-    private HomeFragmentViewModel homeFragmentViewModel;
+    private View root = null;
+    private HomeFragmentViewModel homeFragmentViewModel = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        if (root == null) {
+            root = inflater.inflate(R.layout.fragment_home, container, false);
+            initAdapters(root);
+        }
 
-        initAdapters(root);
-
-        homeFragmentViewModel = ViewModelProviders.of(this, new HomeFragmentViewModelFactory()).get(HomeFragmentViewModel.class);
+        if (homeFragmentViewModel == null) {
+            homeFragmentViewModel = ViewModelProviders.of(this, new HomeFragmentViewModelFactory()).get(HomeFragmentViewModel.class);
+        }
 
         return root;
     }
@@ -92,8 +85,6 @@ public class HomeFragment extends Fragment {
         communityQuestionsScroll.setLayoutManager(new LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false));
         communityQuestionsScroll.setAdapter(homeCommunityQuestionsAdapter);
         communityQuestionsScroll.setHasFixedSize(false);
-
-
     }
 
     public void tableContentLoaded() {
@@ -102,28 +93,5 @@ public class HomeFragment extends Fragment {
 
     public void questionContentLoaded() {
         homeCommunityQuestionsAdapter.swapData(contentManager.getCommunityQuestions());
-        // TODO: Need to refactor this method to match the tableContentLoaded() so that the content will stay loaded when the fragment is switched.
-    }
-
-    private void slide_down(Context ctx, View v) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_down);
-        if (a != null) {
-            a.reset();
-            if (v != null) {
-                v.clearAnimation();
-                v.startAnimation(a);
-            }
-        }
-    }
-
-    private void slide_up(Context ctx, View v) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_up);
-        if (a != null) {
-            a.reset();
-            if (v != null) {
-                v.clearAnimation();
-                v.startAnimation(a);
-            }
-        }
     }
 }
