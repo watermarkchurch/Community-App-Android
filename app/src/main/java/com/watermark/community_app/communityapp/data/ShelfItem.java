@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ShelfItem implements Serializable {
     String title = "";
     ArrayList<PostData> posts;
-    ArrayList<ShelfItem> nestedShelves = new ArrayList<>();
+    ArrayList<ShelfItem> nestedShelves;
 
     public ShelfItem(String title_, ArrayList<PostData> posts_, ArrayList<ShelfItem> nestedShelves_) {
         title = title_;
