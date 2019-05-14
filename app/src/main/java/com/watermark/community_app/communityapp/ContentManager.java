@@ -1,7 +1,5 @@
 package com.watermark.community_app.communityapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 
@@ -11,8 +9,8 @@ import com.contentful.java.cda.CDAClient;
 import com.contentful.java.cda.CDAEntry;
 import com.contentful.java.cda.CDAResource;
 import com.google.gson.internal.LinkedTreeMap;
-import com.watermark.community_app.communityapp.data.CommunityQuestionsData;
-import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.data.CommunityQuestionsItem;
+import com.watermark.community_app.communityapp.data.PostItem;
 import com.watermark.community_app.communityapp.data.ShelfItem;
 
 import java.net.URL;
@@ -45,8 +43,8 @@ public class ContentManager {
     private CDAArray shelf_cda_array;
 
     // Processed Arrays
-    private ArrayList<PostData> table_list = new ArrayList<>();
-    private ArrayList<CommunityQuestionsData> questions_list = new ArrayList<>();
+    private ArrayList<PostItem> table_list = new ArrayList<>();
+    private ArrayList<CommunityQuestionsItem> questions_list = new ArrayList<>();
     private ArrayList<ShelfItem> pantry_list = new ArrayList<>();
 
     // Singleton loading
@@ -91,7 +89,7 @@ public class ContentManager {
                     // Process each post in the entry
                     for (CDAEntry postEntry : posts) {
                         CDAEntry post = table_cda_array.entries().get(postEntry.id());
-                        PostData data = processPostData(post, table_cda_array);
+                        PostItem data = processPostData(post, table_cda_array);
                         table_list.add(data);
                     }
                 }
@@ -118,7 +116,7 @@ public class ContentManager {
                     for (CDAEntry postEntry : questions) {
                         CDAEntry post = questions_cda_array.entries().get(postEntry.id());
 
-                        CommunityQuestionsData data = new CommunityQuestionsData(post.getField("question").toString(), post.getField("description").toString());
+                        CommunityQuestionsItem data = new CommunityQuestionsItem(post.getField("question").toString(), post.getField("description").toString());
                         questions_list.add(data);
                     }
                 }
@@ -158,7 +156,7 @@ public class ContentManager {
         }.execute();
     }
 
-    private PostData processPostData(CDAEntry post, CDAArray assets) {
+    private PostItem processPostData(CDAEntry post, CDAArray assets) {
         BitmapDrawable background = null;
         CDAAsset image = post.getField("postImage");
         if (image != null && assets.assets() != null) {
@@ -176,7 +174,7 @@ public class ContentManager {
             }
         }
 
-        return new PostData(checkFieldForNull(post, "title"), checkFieldForNull(post, "mediaUrl"), checkFieldForNull(post, "content"), background);
+        return new PostItem(checkFieldForNull(post, "title"), checkFieldForNull(post, "mediaUrl"), checkFieldForNull(post, "content"), background);
     }
 
     /**
@@ -188,11 +186,11 @@ public class ContentManager {
         ArrayList<CDAEntry> shelves = shelf.getField("shelves");
 
         ArrayList<ShelfItem> nestedShelvesData = new ArrayList<>();
-        ArrayList<PostData> postData = new ArrayList<>();
+        ArrayList<PostItem> postData = new ArrayList<>();
 
         if (posts != null) {
             for (CDAEntry p : posts) {
-                PostData data = processPostData(p, shelf_cda_array);
+                PostItem data = processPostData(p, shelf_cda_array);
                 postData.add(data);
             }
         }
@@ -220,11 +218,11 @@ public class ContentManager {
         return result;
     }
 
-    public ArrayList<CommunityQuestionsData> getCommunityQuestions() {
+    public ArrayList<CommunityQuestionsItem> getCommunityQuestions() {
         return questions_list;
     }
 
-    public ArrayList<PostData> getWeeklyMediaEntries() {
+    public ArrayList<PostItem> getWeeklyMediaEntries() {
         return table_list;
     }
 

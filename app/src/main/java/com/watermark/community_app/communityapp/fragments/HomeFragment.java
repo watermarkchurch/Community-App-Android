@@ -19,8 +19,8 @@ import com.watermark.community_app.communityapp.activity.MainActivity;
 import com.watermark.community_app.communityapp.activity.PostActivity;
 import com.watermark.community_app.communityapp.adapters.HomeCommunityQuestionsAdapter;
 import com.watermark.community_app.communityapp.adapters.HomeWeeklyAdapter;
-import com.watermark.community_app.communityapp.data.CommunityQuestionsData;
-import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.data.CommunityQuestionsItem;
+import com.watermark.community_app.communityapp.data.PostItem;
 import com.watermark.community_app.communityapp.viewmodel.HomeFragmentViewModel;
 import com.watermark.community_app.communityapp.viewmodel.HomeFragmentViewModelFactory;
 
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Blake on 2/16/2019.
- * <p>
+ *
  * The "Home" page.
  */
 public class HomeFragment extends Fragment {
@@ -64,8 +64,8 @@ public class HomeFragment extends Fragment {
         weeklyAdapter = new HomeWeeklyAdapter();
         weeklyAdapter.setCallbacks(new HomeWeeklyAdapter.HomeWeeklyCallbacks() {
             @Override
-            public void onItemClicked(PostData postData) {
-                MainActivity.launchPostActivity(postData, postIntent, requireActivity());
+            public void onItemClicked(PostItem postItem) {
+                MainActivity.launchPostActivity(postItem, postIntent, requireActivity());
             }
         });
         RecyclerView weeklyScroll = root.findViewById(R.id.weekly_scroll);
@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
         homeCommunityQuestionsAdapter = new HomeCommunityQuestionsAdapter();
         homeCommunityQuestionsAdapter.setCallbacks(new HomeCommunityQuestionsAdapter.Callbacks() {
             @Override
-            public void onItemClicked(@NotNull CommunityQuestionsData communityQuestionsData) {
+            public void onItemClicked(@NotNull CommunityQuestionsItem communityQuestionsItem) {
 
             }
         });

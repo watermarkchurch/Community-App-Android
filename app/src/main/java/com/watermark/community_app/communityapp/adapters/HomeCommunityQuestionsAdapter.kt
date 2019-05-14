@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.watermark.community_app.communityapp.R
-import com.watermark.community_app.communityapp.data.CommunityQuestionsData
+import com.watermark.community_app.communityapp.data.CommunityQuestionsItem
 
 class HomeCommunityQuestionsAdapter : RecyclerView.Adapter<HomeCommunityQuestionsViewHolder>() {
 
-    private var communityQuestions = listOf<CommunityQuestionsData>()
+    private var communityQuestions = listOf<CommunityQuestionsItem>()
     private lateinit var callbacks: Callbacks
 
-    fun swapData(questions: List<CommunityQuestionsData>) {
+    fun swapData(questions: List<CommunityQuestionsItem>) {
         communityQuestions = questions
         notifyDataSetChanged()
     }
@@ -50,7 +50,7 @@ class HomeCommunityQuestionsAdapter : RecyclerView.Adapter<HomeCommunityQuestion
     }
 
     interface Callbacks {
-        fun onItemClicked(communityQuestionsData: CommunityQuestionsData)
+        fun onItemClicked(communityQuestionsItem: CommunityQuestionsItem)
     }
 
 }

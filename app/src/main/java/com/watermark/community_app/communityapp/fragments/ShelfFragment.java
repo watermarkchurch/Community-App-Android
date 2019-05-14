@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.watermark.community_app.communityapp.R;
 import com.watermark.community_app.communityapp.activity.MainActivity;
 import com.watermark.community_app.communityapp.activity.PostActivity;
-import com.watermark.community_app.communityapp.data.CommunityArrayAdapter;
-import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.adapters.CommunityArrayAdapter;
+import com.watermark.community_app.communityapp.data.PostItem;
 import com.watermark.community_app.communityapp.data.ShelfItem;
 
 import java.util.ArrayList;
@@ -44,9 +44,9 @@ public class ShelfFragment extends Fragment {
 
         LinearLayout postView = (LinearLayout) thisView.findViewById(R.id.post_section);
 
-        for (final PostData postData : shelfItem.getPosts()) {
+        for (final PostItem postItem : shelfItem.getPosts()) {
             TextView t = new TextView(getContext());
-            t.setText(postData.getTitle());
+            t.setText(postItem.getTitle());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400, 100);
             params.setMargins(10, 10, 10, 10);
             t.setLayoutParams(params);
@@ -59,7 +59,7 @@ public class ShelfFragment extends Fragment {
             t.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.launchPostActivity(postData, postIntent, (AppCompatActivity) getActivity());
+                    MainActivity.launchPostActivity(postItem, postIntent, (AppCompatActivity) getActivity());
                 }
             });
         }
@@ -67,7 +67,7 @@ public class ShelfFragment extends Fragment {
         itemList = shelfItem.getShelves();
 
         // Setup the list of items
-        listAdapter = new CommunityArrayAdapter(getContext(), itemList);
+        listAdapter = new CommunityArrayAdapter(getContext(), itemList, R.layout.item, R.id.title);
         listView = (ListView) thisView.findViewById(R.id.shelf_list);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

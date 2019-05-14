@@ -3,14 +3,19 @@ package com.watermark.community_app.communityapp.data;
 /**
  * Created by Blake on 3/1/2019.
  */
-public class CommunityQuestionsData {
+public class CommunityQuestionsItem implements ICommunityItem {
     private String question = "";
     private String description = "";
     private boolean isExpanded = false;
 
-    public CommunityQuestionsData(String q, String d) {
+    public CommunityQuestionsItem(String q, String d) {
         question = q;
         description = d;
+    }
+
+    @Override
+    public String getTitle() {
+        return getQuestion();
     }
 
     public String getQuestion() {

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.watermark.community_app.communityapp.R;
-import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.data.PostItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.WeeklyViewHolder> {
 
-    private ArrayList<PostData> entries = new ArrayList<>();
+    private ArrayList<PostItem> entries = new ArrayList<>();
     private HomeWeeklyCallbacks callbacks;
 
-    public void swapData(@NonNull List<PostData> entries) {
+    public void swapData(@NonNull List<PostItem> entries) {
         this.entries.clear();
         this.entries.addAll(entries);
         notifyDataSetChanged();
@@ -38,7 +38,7 @@ public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.We
 
     @Override
     public void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position) {
-        final PostData postData = entries.get(position);
+        final PostItem postItem = entries.get(position);
 
         holder.title.setText(entries.get(position).getTitle());
         // TODO: Setting the background to an image is slow. This is causeing an out of memory exception.
@@ -47,7 +47,7 @@ public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.We
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callbacks.onItemClicked(postData);
+                callbacks.onItemClicked(postItem);
             }
         });
     }
@@ -58,7 +58,7 @@ public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.We
     }
 
     public interface HomeWeeklyCallbacks {
-        void onItemClicked(PostData postData);
+        void onItemClicked(PostItem postItem);
     }
 
     static class WeeklyViewHolder extends RecyclerView.ViewHolder {

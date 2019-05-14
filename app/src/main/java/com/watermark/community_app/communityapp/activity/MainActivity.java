@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.watermark.community_app.communityapp.ContentManager;
 import com.watermark.community_app.communityapp.R;
-import com.watermark.community_app.communityapp.data.PostData;
+import com.watermark.community_app.communityapp.data.PostItem;
 import com.watermark.community_app.communityapp.fragments.HomeFragment;
 import com.watermark.community_app.communityapp.fragments.PantryFragment;
 import com.watermark.community_app.communityapp.fragments.SearchFragment;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void launchPostActivity(PostData data, Intent videoIntent, Activity parentActivity) {
+    public static void launchPostActivity(PostItem data, Intent videoIntent, Activity parentActivity) {
         String titleLabel = parentActivity.getString(R.string.title);
         String descriptionLabel = parentActivity.getString(R.string.content);
         String urlLabel = parentActivity.getString(R.string.media_url);

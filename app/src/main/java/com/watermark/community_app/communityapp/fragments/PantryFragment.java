@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.watermark.community_app.communityapp.ContentManager;
 import com.watermark.community_app.communityapp.R;
-import com.watermark.community_app.communityapp.data.CommunityArrayAdapter;
+import com.watermark.community_app.communityapp.adapters.CommunityArrayAdapter;
 import com.watermark.community_app.communityapp.data.ShelfItem;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class PantryFragment extends Fragment {
         thisView = inflater.inflate(R.layout.pantry_layout, container, false);
 
         // Setup the list of items
-        listAdapter = new CommunityArrayAdapter(getContext(), itemList);
+        listAdapter = new CommunityArrayAdapter(getContext(), itemList, R.layout.item, R.id.title);
         listView = (ListView) thisView.findViewById(R.id.list);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
