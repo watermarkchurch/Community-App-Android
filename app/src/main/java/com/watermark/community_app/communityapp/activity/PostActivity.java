@@ -15,6 +15,8 @@ import com.watermark.community_app.communityapp.R;
 
 /**
  * Created by Blake on 3/12/2019.
+ *
+ * This Activity will show the content for a Post
  */
 public class PostActivity extends AppCompatActivity {
     private CustomMediaController mediaController = null;

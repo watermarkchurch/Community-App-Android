@@ -7,19 +7,20 @@ import java.io.Serializable;
 /**
  * Created by Blake on 3/2/2019.
  */
-public class PostData implements Serializable {
+public class PostItem implements Serializable, ICommunityItem {
     private String title = "";
     private String mediaUrl = "";
     private String content = "";
     private BitmapDrawable postImage;
 
-    public PostData(String title_, String mediaUrl_, String content_, BitmapDrawable postImage_) {
+    public PostItem(String title_, String mediaUrl_, String content_, BitmapDrawable postImage_) {
         title = title_;
         mediaUrl = mediaUrl_;
         content = content_;
         postImage = postImage_;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }

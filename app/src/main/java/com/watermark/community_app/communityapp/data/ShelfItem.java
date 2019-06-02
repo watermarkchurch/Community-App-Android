@@ -6,21 +6,23 @@ import java.util.ArrayList;
 /**
  * Created by Blake on 3/15/2019.
  */
-public class ShelfItem implements Serializable {
+public class ShelfItem implements Serializable, ICommunityItem {
     String title = "";
-    ArrayList<PostData> posts;
+    ArrayList<PostItem> posts;
     ArrayList<ShelfItem> nestedShelves;
 
-    public ShelfItem(String title_, ArrayList<PostData> posts_, ArrayList<ShelfItem> nestedShelves_) {
+    public ShelfItem(String title_, ArrayList<PostItem> posts_, ArrayList<ShelfItem> nestedShelves_) {
         title = title_;
         posts = posts_;
         nestedShelves = nestedShelves_;
     }
+
+    @Override
     public String getTitle() {
         return title;
     }
 
-    public ArrayList<PostData> getPosts() {
+    public ArrayList<PostItem> getPosts() {
         return posts;
     }
 
@@ -31,7 +33,7 @@ public class ShelfItem implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(title + "\n");
-        for (PostData p : posts) {
+        for (PostItem p : posts) {
             sb.append(p.getTitle() + " ");
         }
         sb.append("\n");
