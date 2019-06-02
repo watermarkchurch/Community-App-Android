@@ -41,7 +41,7 @@ public class HomeWeeklyAdapter extends RecyclerView.Adapter<HomeWeeklyAdapter.We
         final PostItem postItem = entries.get(position);
 
         holder.title.setText(entries.get(position).getTitle());
-        // TODO: Setting the background to an image is slow. This is causeing an out of memory exception.
+        // TODO: Setting the background to an image is slow. This is causeing an out of memory exception. Github Issue #9
         //holder.title.setBackground(entries.get(position).getPostImage());
         holder.title.setBackgroundColor(Color.BLACK);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

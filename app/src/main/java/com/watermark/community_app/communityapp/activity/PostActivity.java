@@ -41,7 +41,7 @@ public class PostActivity extends AppCompatActivity {
         contentView.setText(content);
 
         try {
-            /* TODO: this url may be a youtube link and will not play because we need a link to a video file.
+            /* TODO: this url may be a youtube link and will not play because we need a link to a video file. Github Issue #4
              * Temporary link to use while testing: "https://s3.amazonaws.com/media-files.watermark.org/assets/20190218/a067faca-efeb-4de1-b69b-b4e6b3d1ff8f/Why-Should-Christians-Serve.mp4"
              */
             Uri uri = Uri.parse(media_url);
